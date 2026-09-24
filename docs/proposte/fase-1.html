@@ -1,0 +1,241 @@
+<title>Verdetto, piano Fase 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+:root{
+  --bg:#F3F4F2; --surface:#FFFFFF; --ink:#15171A; --muted:#5A5F64; --line:#D8DBD6;
+  --go:#16A34A; --go-ink:#12783A; --go-soft:#E3F3E8;
+  --wait:#E5A400; --wait-ink:#835B00; --wait-soft:#FBF1D6;
+  --stop:#D2382B; --stop-ink:#B02A1F; --stop-soft:#FBE5E2;
+  --off:#C9CCC8;
+  --acc-cos:#0E6B6B; --acc-multa:#2B59C3;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Verdana", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#111315; --surface:#1A1D20; --ink:#ECEDEB; --muted:#A3A8AC; --line:#2E3236;
+    --go:#2FBF63; --go-ink:#5FD68A; --go-soft:#16301F;
+    --wait:#F2B81F; --wait-ink:#F5C84E; --wait-soft:#33290F;
+    --stop:#E8594B; --stop-ink:#F08074; --stop-soft:#381B18;
+    --off:#3A3F43; --acc-cos:#3FB3B3; --acc-multa:#7C9CF0;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#111315; --surface:#1A1D20; --ink:#ECEDEB; --muted:#A3A8AC; --line:#2E3236;
+  --go:#2FBF63; --go-ink:#5FD68A; --go-soft:#16301F;
+  --wait:#F2B81F; --wait-ink:#F5C84E; --wait-soft:#33290F;
+  --stop:#E8594B; --stop-ink:#F08074; --stop-soft:#381B18;
+  --off:#3A3F43; --acc-cos:#3FB3B3; --acc-multa:#7C9CF0;
+}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--body);padding-inline:16px;padding-block:28px 64px}
+.wrap{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,7vw,52px);font-weight:800;letter-spacing:-.02em}
+h2{font-size:28px;font-weight:700;letter-spacing:-.01em}
+h3{font-size:19px;font-weight:700}
+p{margin:0;max-width:65ch}
+section{display:flex;flex-direction:column;gap:16px}
+a{color:inherit;text-underline-offset:3px}
+.muted{color:var(--muted)}
+.small{font-size:15px}
+
+/* logo: semaforo orizzontale con una luce accesa */
+.mark{display:inline-flex;gap:6px;padding:7px 9px;border-radius:999px;background:var(--ink)}
+.mark i{width:12px;height:12px;border-radius:50%;background:#4A4E52;display:block}
+.mark i.on-go{background:var(--go)} .mark i.on-wait{background:var(--wait)} .mark i.on-stop{background:var(--stop)}
+header{display:flex;flex-direction:column;gap:18px}
+.brandrow{display:flex;align-items:center;gap:12px;font-family:var(--display);font-weight:700;font-size:20px}
+.lede{font-size:19px}
+
+/* decisioni */
+.decide{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+.decide li{list-style:none;display:grid;grid-template-columns:28px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.decide ol{margin:0;padding:0}
+.decide .n{font-family:var(--display);font-weight:800;font-size:20px;color:var(--muted)}
+
+/* tabella nomi */
+.tablebox{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:16px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700}
+td.name{font-family:var(--display);font-weight:700;font-size:18px;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.pill::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.free{color:var(--go-ink);background:var(--go-soft)}
+.mid{color:var(--wait-ink);background:var(--wait-soft)}
+.taken{color:var(--stop-ink);background:var(--stop-soft)}
+tr.pick td{background:var(--go-soft)}
+.note{border-left:3px solid var(--wait);padding:4px 0 4px 14px}
+
+/* grafica */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.sw{display:flex;gap:10px;align-items:center;font-size:14px}
+.sw b{display:block;font-size:15px}
+.chip{width:40px;height:40px;border-radius:8px;flex:none;border:1px solid var(--line)}
+.typepair{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media (max-width:560px){.typepair{grid-template-columns:1fr}}
+.typepair .big{font-family:var(--display);font-weight:800;font-size:40px;line-height:1}
+.typepair .bodysample{font-size:19px;line-height:1.5}
+
+/* mockup telefono */
+.mockrow{display:grid;grid-template-columns:minmax(0,340px) 1fr;gap:28px;align-items:start}
+@media (max-width:640px){.mockrow{grid-template-columns:1fr}}
+.phone{background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:22px 18px;display:flex;flex-direction:column;gap:14px;max-width:340px;box-shadow:0 12px 32px -18px rgba(0,0,0,.35)}
+.phone .tool{font-size:13px;font-weight:700;color:var(--acc-cos)}
+.lights{display:flex;gap:10px;align-items:center}
+.lights i{width:26px;height:26px;border-radius:50%;background:var(--off);display:block}
+.lights i.lit{background:var(--wait);box-shadow:0 0 0 5px var(--wait-soft)}
+.verdict{font-family:var(--display);font-weight:800;font-size:44px;line-height:1;color:var(--wait-ink)}
+.car{font-size:15px;color:var(--muted)}
+.reasons{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:16px}
+.conf{font-size:14px;display:flex;gap:8px;align-items:center}
+.btn{display:block;text-align:center;background:var(--ink);color:var(--bg);font-weight:700;padding:13px 16px;border-radius:12px;font-size:16px;border:0}
+.btn.sec{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.ai{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+.why{display:flex;flex-direction:column;gap:12px}
+
+/* stack */
+dl.kv{display:grid;grid-template-columns:max-content 1fr;gap:10px 18px;margin:0}
+dl.kv dt{font-weight:700}
+dl.kv dd{margin:0}
+@media (max-width:480px){dl.kv{grid-template-columns:1fr;gap:2px}dl.kv dd{margin-bottom:10px}}
+.cost{display:grid;grid-template-columns:1fr auto;gap:6px 16px;font-variant-numeric:tabular-nums;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.cost span:nth-child(even){text-align:right}
+.cost .tot{font-weight:700;border-top:1px solid var(--line);padding-top:8px}
+
+/* passi */
+.steps{margin:0;padding:0;list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:14px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:12px}
+.steps li::before{content:counter(s);font-family:var(--display);font-weight:800;font-size:15px;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--ink);display:grid;place-items:center}
+.steps b{display:block}
+ul.plain{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+footer{font-size:14px;color:var(--muted)}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="brandrow"><span class="mark" aria-hidden="true"><i></i><i class="on-wait"></i><i></i></span> Verdetto</div>
+  <h1>Piano della Fase 1, da approvare</h1>
+  <p class="lede">Prima di scrivere il codice ti servono tre decisioni: il nome, la grafica e lo stack. Qui trovi le mie proposte e cosa costruirò dopo il tuo sì. Non ho creato account, non ho comprato niente e non ho pubblicato niente.</p>
+</header>
+
+<section>
+  <h2>Cosa ti chiedo</h2>
+  <div class="decide"><ol>
+    <li><span class="n">1</span><span><b>Il nome.</b> Scegli tra le proposte qui sotto, oppure teniamo "Verdetto" con un dominio diverso.</span></li>
+    <li><span class="n">2</span><span><b>La grafica.</b> Va bene la direzione "semaforo" con questi colori e font, o cambiamo qualcosa?</span></li>
+    <li><span class="n">3</span><span><b>Lo stack.</b> Confermi Next.js, Supabase, Stripe, Resend e Vercel? Ti consiglio di tenerlo: non vedo un'alternativa più semplice che copra tutto.</span></li>
+  </ol></div>
+</section>
+
+<section>
+  <h2>Il nome</h2>
+  <p><b>verdetto.it</b> e <b>verdetto.com</b> sono già registrati. Tutti i nomi di una parola che ho provato lo sono (fiuto, bivio, dritta, occhiata, luceverde…). Questi sono liberi sia in .it sia in .com:</p>
+  <div class="tablebox"><table>
+    <thead><tr><th>Nome</th><th>.it</th><th>.com</th><th>Perché</th></tr></thead>
+    <tbody>
+      <tr class="pick"><td class="name">Vistochiaro</td><td><span class="pill free">libero</span></td><td><span class="pill free">libero</span></td><td><b>Il mio consiglio.</b> Promette chiarezza e funziona per auto, multe e qualsiasi strumento futuro. Non suona legale.</td></tr>
+      <tr><td class="name">Vaioresti</td><td><span class="pill free">libero</span></td><td><span class="pill free">libero</span></td><td>"Vai o resti?" è la domanda di chi deve decidere. Molto memorabile, un po' meno adatto alle multe.</td></tr>
+      <tr><td class="name">IlVerdetto</td><td><span class="pill free">libero</span></td><td><span class="pill free">libero</span></td><td>Il più vicino al nome attuale. "Verdetto" però richiama un tribunale, e Multa Check non deve sembrare un servizio legale.</td></tr>
+      <tr><td class="name">Dimmisubito</td><td><span class="pill free">libero</span></td><td><span class="pill free">libero</span></td><td>Dice la velocità della risposta. È lungo da scrivere al telefono.</td></tr>
+      <tr><td class="name">Pollicesu</td><td><span class="pill free">libero</span></td><td><span class="pill free">libero</span></td><td>Simpatico e immediato, ma dice solo "sì": il verdetto può essere anche rosso.</td></tr>
+      <tr><td class="name">Semaforino</td><td><span class="pill free">libero</span></td><td><span class="pill free">libero</span></td><td>Legato all'identità a semaforo. Il diminutivo rischia di sembrare poco serio quando si paga.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note small"><b>Da sapere.</b> Per il .com ho interrogato il registro ufficiale. Il registro .it non è raggiungibile da qui, quindi ho controllato i DNS pubblici: è un buon indizio, ma va confermato dal registrar al momento dell'acquisto. Non ho potuto consultare le banche dati dei marchi. Nelle ricerche web non ho trovato attività con questi nomi, ma non basta. Prima di comprare cerca il nome su <a href="https://www.tmdn.org/tmview/" target="_blank" rel="noopener">TMview</a> (copre EUIPO e UIBM) nelle classi 9, 35, 42 e 45. Non compro nessun dominio senza il tuo ok.</p>
+</section>
+
+<section>
+  <h2>La grafica</h2>
+  <p>Il marchio è un semaforo con una sola luce accesa. Il colore della luce cambia con il verdetto, quindi il segno funziona per qualsiasi strumento. Tutto il resto è sobrio: fondo grigio chiaro neutro, testo quasi nero, nessun gradiente. Ogni strumento ha un colore d'accento suo, usato solo per piccoli dettagli.</p>
+
+  <div class="swatches">
+    <div class="sw"><span class="chip" style="background:var(--go)"></span><span><b>Verde</b>Compra</span></div>
+    <div class="sw"><span class="chip" style="background:var(--wait)"></span><span><b>Giallo</b>Tratta</span></div>
+    <div class="sw"><span class="chip" style="background:var(--stop)"></span><span><b>Rosso</b>Scappa</span></div>
+    <div class="sw"><span class="chip" style="background:var(--ink)"></span><span><b>Inchiostro</b>testo e pulsanti</span></div>
+    <div class="sw"><span class="chip" style="background:var(--acc-cos)"></span><span><b>Petrolio</b>Compra o Scappa</span></div>
+    <div class="sw"><span class="chip" style="background:var(--acc-multa)"></span><span><b>Blu</b>Multa Check</span></div>
+  </div>
+
+  <div class="typepair">
+    <div><div class="big">Scappa.</div><p class="small muted">Titoli: <b>Bricolage Grotesque</b>, gratuito su Google Fonts. Ha carattere e resta leggibile anche molto grande.</p></div>
+    <div><p class="bodysample">Il prezzo è 1.400 € sopra annunci simili nella tua zona.</p><p class="small muted">Testo: <b>Atkinson Hyperlegible</b>, progettato per chi legge male. Distingue bene 1, l e I e 0 e O, cosa utile con prezzi e chilometri.</p></div>
+  </div>
+
+  <div class="mockrow">
+    <div class="phone" aria-label="Esempio di pagina risultato su telefono">
+      <span class="tool">Compra o Scappa · esempio inventato</span>
+      <div class="lights" aria-hidden="true"><i></i><i class="lit"></i><i></i></div>
+      <div class="verdict">Tratta</div>
+      <div class="car">Fiat Panda 1.2 · 2017 · 68.000 km · 7.900 € · privato</div>
+      <ol class="reasons">
+        <li>Il prezzo è circa 700 € sopra annunci simili.</li>
+        <li>Mancano le fatture dei tagliandi dopo i 50.000 km.</li>
+        <li>I km sono coerenti con età e uso dichiarato.</li>
+      </ol>
+      <div class="conf"><span class="pill mid">Affidabilità media</span><span class="muted">12 annunci confrontati</span></div>
+      <span class="btn">Copia il messaggio per trattare</span>
+      <span class="btn sec">Vedi le 10 domande da fare</span>
+      <p class="ai">Report generato con l'AI. Non sostituisce vedere l'auto dal vivo né l'ispezione di un meccanico.</p>
+    </div>
+    <div class="why">
+      <h3>Com'è fatta la pagina risultato</h3>
+      <p>Una colonna sola, pensata per il pollice. In cima c'è il verdetto, grande e colorato, con i tre motivi subito sotto: chi è davanti all'auto capisce in cinque secondi. Il resto del report (identikit, punti deboli, prezzi, campanelli d'allarme, domande, prova su strada) segue in sezioni apribili.</p>
+      <p>I pulsanti dicono cosa succede ("Copia il messaggio per trattare"). L'avviso sull'AI è sempre visibile, non nascosto in fondo.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Stack e costi dell'AI</h2>
+  <dl class="kv">
+    <dt>Sito</dt><dd>Next.js con TypeScript e Tailwind, pagine generate dal server (veloci e buone per Google)</dd>
+    <dt>Dati e file</dt><dd>Supabase in Europa (Francoforte) per il GDPR, con regole di accesso (RLS) su ogni tabella; screenshot in uno spazio privato</dd>
+    <dt>AI</dt><dd>Claude Sonnet 5 (<code>claude-sonnet-5</code>, confermato nella documentazione ufficiale) con ricerca web lato server, solo dal server</dd>
+    <dt>Pagamenti</dt><dd>Stripe, solo in modalità test fino alla Fase 3</dd>
+    <dt>Email</dt><dd>Resend</dd>
+    <dt>Hosting</dt><dd>Vercel. Il piano gratuito non ammette uso commerciale: al lancio serve il piano Pro, circa 20 $ al mese.</dd>
+  </dl>
+  <p>Prezzi attuali di Sonnet 5: 2 $ per milione di token letti, 10 $ per milione scritti, più 10 $ ogni 1.000 ricerche web. Stima per un report Compra o Scappa:</p>
+  <div class="cost small">
+    <span>~60.000 token letti (screenshot, prompt, risultati delle ricerche)</span><span>0,12 $</span>
+    <span>~8.000 token scritti</span><span>0,08 $</span>
+    <span>~6 ricerche web</span><span>0,06 $</span>
+    <span class="tot">Totale stimato per report</span><span class="tot">≈ 0,26 $</span>
+  </div>
+  <p class="small muted">È una stima: il costo vero di ogni report verrà salvato e mostrato nel pannello. Su un prezzo di 19,99 € il costo dell'AI resta sotto il 2%.</p>
+</section>
+
+<section>
+  <h2>Cosa costruisco dopo il tuo sì</h2>
+  <ol class="steps">
+    <li><span><b>Scheletro del progetto.</b> Next.js, controlli automatici, test, <code>.env.example</code>. Le chiavi andranno solo in <code>.env.local</code>.</span></li>
+    <li><span><b>Motore degli strumenti.</b> Ogni strumento è un file di configurazione: URL, testi SEO, form, prompt, schema del risultato, prezzo, ricerca web, domande frequenti. Aggiungerne uno non tocca il resto.</span></li>
+    <li><span><b>Compra o Scappa.</b> Form con fino a 8 screenshot, testo incollato, link solo come riferimento e campi facoltativi. Prompt con la struttura in 9 punti, risultato in JSON controllato.</span></li>
+    <li><span><b>Controllo qualità.</b> Se il JSON non è valido, mancano le fonti o l'affidabilità è bassa, il report va nella coda di revisione.</span></li>
+    <li><span><b>Pagina del risultato</b> con un link privato impossibile da indovinare, come nell'esempio sopra.</span></li>
+    <li><span><b>Pannello /admin</b> con login: ordini, prova manuale con upload, costo per report, "Rigenera". Il pulsante di rimborso sarà pronto ma collegato a Stripe solo in test.</span></li>
+    <li><span><b>Collaudo con te</b> su almeno 20 annunci veri, confrontando i verdetti con il tuo giudizio.</span></li>
+  </ol>
+</section>
+
+<section>
+  <h2>Cosa mi servirà più avanti</h2>
+  <p>I passi 1–5 li posso fare subito, senza account. Per provare report veri e per il pannello ti chiederò di creare (o di autorizzarmi a guidarti nel creare):</p>
+  <ul class="plain">
+    <li>una chiave API Anthropic, con un limite di spesa mensile basso</li>
+    <li>un progetto Supabase nella regione Europa</li>
+    <li>un account Stripe in modalità test (Fase 3)</li>
+    <li>account Vercel e Resend, solo quando andremo online</li>
+  </ul>
+</section>
+
+<footer>Proposta del 24 settembre 2026 · file nel repository: <code>docs/proposte/fase-1.html</code></footer>
+</div>

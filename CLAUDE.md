@@ -11,7 +11,7 @@ Un sito indipendente, non collegato a profili social o persone, che vende "verde
 
 I clienti arrivano da Google: ricerche organiche (SEO) e Google Ads. In futuro si aggiungeranno altri strumenti, anche fuori dal mondo auto: l'architettura deve renderlo facile.
 
-Nome provvisorio: "Verdetto", scelto perché non è legato alle auto. Proponimi 5 alternative, verifica la disponibilità dei domini .it e .com e l'esistenza di marchi simili (UIBM, EUIPO), e chiedimi conferma prima di acquistare qualsiasi dominio.
+Nome scelto: **Vistochiaro** (al 24/09/2026 vistochiaro.it e vistochiaro.com risultavano liberi). Prima di acquistare il dominio: conferma sul registrar, ricerca marchi su TMview (EUIPO + UIBM) e il mio ok esplicito.
 
 ## Come lavorare con me
 
@@ -130,11 +130,33 @@ Obbligatorio prima di andare online: privacy policy, banner cookie con Consent M
 - Testi in italiano semplice e verbi attivi: ogni pulsante dice cosa succede ("Controlla l'annuncio", "Calcola le scadenze").
 - Velocità: le prestazioni della pagina contano sia per la SEO sia per il costo degli annunci.
 
+## Decisioni prese
+
+- Nome: Vistochiaro. Grafica: semaforo con una luce accesa; titoli Bricolage Grotesque, testo Lexend; colori in `src/app/globals.css`.
+- AI: `claude-sonnet-5` (2 $/M token in ingresso, 10 $/M in uscita, 10 $ ogni 1.000 ricerche web; verificato il 24/09/2026). Due passaggi: ricerca con `web_search_20260318`, poi JSON strutturato con zod. Le citazioni della ricerca non sono compatibili con l'output strutturato, per questo si separano; il controllo qualità accetta solo URL usciti davvero dalle ricerche.
+- Login admin: password (`ADMIN_PASSWORD`) e cookie firmato, più semplice da gestire di Supabase Auth per un solo amministratore.
+- Senza `ANTHROPIC_API_KEY` il sito genera report dimostrativi; senza Supabase usa la cartella `.data` (solo in locale).
+
 ## Stato
 
 - [ ] Fase 1 — fondamenta, motore e Compra o Scappa
+  - [x] Progetto Next.js 16 + TypeScript + Tailwind, test (Vitest), `.env.example`
+  - [x] Motore strumenti (`src/lib/tools`) e modulo Compra o Scappa (form, prompt, schema, controllo qualità)
+  - [x] Chiamata a Claude lato server con ricerca web, costo per report salvato
+  - [x] Pagina risultato con link privato (`/r/<token>`), home, pagina strumento, report di esempio
+  - [x] Pannello `/admin`: elenco e coda di revisione, prova manuale, costo, Rigenera, Approva, rimborso (segnato; Stripe in Fase 3)
+  - [x] Schema Supabase con RLS (`supabase/migrations/0001_reports.sql`)
+  - [ ] Creare progetto Supabase (UE) e chiave API Anthropic con limite di spesa — serve l'ok dell'utente
+  - [ ] Prime prove con annunci veri e taratura del prompt
+  - [ ] Collaudo su almeno 20 annunci veri confrontati con il giudizio dell'utente
 - [ ] Fase 2 — Multa Check e primo lancio pubblico
 - [ ] Fase 3 — vendita automatica
 - [ ] Fase 4 — SEO
 - [ ] Fase 5 — Google Ads
 - [ ] Fase 6 — espansione
+
+## Note tecniche
+
+Next.js 16 ha cambiato varie API: prima di scrivere codice leggi AGENTS.md e le guide in `node_modules/next/dist/docs/`.
+
+@AGENTS.md

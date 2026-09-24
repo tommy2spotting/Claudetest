@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+/*
+  Vistochiaro — sistema grafico.
+  Identità: il semaforo (verde/giallo/rosso). Tutto il resto è sobrio.
+  Ogni strumento ha un accento suo (--acc-*), usato solo per piccoli dettagli.
+*/
+:root {
+  --paper: #f3f4f2;
+  --card: #ffffff;
+  --ink: #15171a;
+  --muted: #5a5f64;
+  --line: #d8dbd6;
+  --soft: #e9ebe7;
+
+  --go: #16a34a;
+  --go-ink: #12783a;
+  --go-soft: #e3f3e8;
+  --wait: #e5a400;
+  --wait-ink: #835b00;
+  --wait-soft: #fbf1d6;
+  --stop: #d2382b;
+  --stop-ink: #b02a1f;
+  --stop-soft: #fbe5e2;
+  --off: #c9ccc8;
+
+  --acc-cos: #0e6b6b;
+  --acc-multa: #2b59c3;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --paper: #111315;
+    --card: #1a1d20;
+    --ink: #ecedeb;
+    --muted: #a3a8ac;
+    --line: #2e3236;
+    --soft: #22262a;
+
+    --go: #2fbf63;
+    --go-ink: #5fd68a;
+    --go-soft: #16301f;
+    --wait: #f2b81f;
+    --wait-ink: #f5c84e;
+    --wait-soft: #33290f;
+    --stop: #e8594b;
+    --stop-ink: #f08074;
+    --stop-soft: #381b18;
+    --off: #3a3f43;
+
+    --acc-cos: #3fb3b3;
+    --acc-multa: #7c9cf0;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-soft: var(--soft);
+  --color-go: var(--go);
+  --color-go-ink: var(--go-ink);
+  --color-go-soft: var(--go-soft);
+  --color-wait: var(--wait);
+  --color-wait-ink: var(--wait-ink);
+  --color-wait-soft: var(--wait-soft);
+  --color-stop: var(--stop);
+  --color-stop-ink: var(--stop-ink);
+  --color-stop-soft: var(--stop-soft);
+  --color-off: var(--off);
+  --color-acc-cos: var(--acc-cos);
+  --color-acc-multa: var(--acc-multa);
+
+  --font-display: var(--font-bricolage), "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-sans: var(--font-lexend), Verdana, system-ui, sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16.5px;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+:focus-visible {
+  outline: 3px solid var(--acc-cos);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Il semaforo del marchio: all'avvio passa rosso → giallo → verde e poi resta sulla luce del verdetto. */
+@keyframes luce {
+  0%,
+  100% {
+    background: #3d4145;
+    box-shadow: none;
+  }
+  12%,
+  28% {
+    background: var(--c);
+    box-shadow: 0 0 10px var(--c-soft);
+  }
+}
+
+@keyframes luce-resta {
+  0% {
+    background: #3d4145;
+    box-shadow: none;
+  }
+  12%,
+  100% {
+    background: var(--c);
+    box-shadow: 0 0 10px var(--c-soft);
+  }
+}
+
+.semaforo-intro > i {
+  animation: luce 1.8s ease-in-out both;
+}
+.semaforo-intro > i[data-acceso] {
+  animation-name: luce-resta;
+  animation-delay: 1.35s !important;
+}
+.semaforo-intro > i:nth-child(1) {
+  animation-delay: 0s;
+}
+.semaforo-intro > i:nth-child(2) {
+  animation-delay: 0.45s;
+}
+.semaforo-intro > i:nth-child(3) {
+  animation-delay: 0.9s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .semaforo-intro > i {
+    animation: none;
+  }
+}
